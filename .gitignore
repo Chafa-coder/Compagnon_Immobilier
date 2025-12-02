@@ -1,0 +1,18 @@
+# Ignore les fichiers volumineux
+data/outputs_modelisation/*.pkl
+data/outputs_prepa/*.pkl
+data/outputs_evolution/*.pkl
+
+# Ignore les fichiers Python compilés
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Dossiers et fichiers temporaires
+*.tmp
+*.log
+.DS_Store
+
+# Checkpoints Jupyter
+.ipynb_checkpoints/
