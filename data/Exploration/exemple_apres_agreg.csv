@@ -1,0 +1,3 @@
+id_mutation,numero_disposition,valeur_fonciere,surface_reelle_bati,surface_terrain,nombre_pieces_principales,type_local,type_local_simplifie,surface_carrez_totale,latitude,longitude
+2024-1253,1,120000.0,107.0,0.0,3.0,"Appartement,Dépendance",Appartement,119.48,46.154308,5.604783
+2024-21,1,620000.0,138.0,638.0,7.0,"Dépendance,Maison",Maison,0.0,46.317463,6.071652

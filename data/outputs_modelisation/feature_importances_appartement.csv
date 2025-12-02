@@ -1,0 +1,9 @@
+Feature,Importance
+cat_high__code_commune,0.5156444
+cat_high__code_postal,0.21171376
+num__surface_utilisee,0.13512221
+cat_high__code_departement,0.052017733
+num__nombre_pieces_principales,0.044993203
+num__latitude,0.015835205
+num__longitude,0.01564924
+num__surface_terrain,0.009024318

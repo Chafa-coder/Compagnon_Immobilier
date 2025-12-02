@@ -1,0 +1,13 @@
+{
+    "best_model": "XGBoost",
+    "best_r2_cv": 0.7204825458796321,
+    "best_params": {
+        "model__subsample": 0.8,
+        "model__n_estimators": 800,
+        "model__min_child_weight": 10,
+        "model__max_depth": 10,
+        "model__learning_rate": 0.1,
+        "model__gamma": 0,
+        "model__colsample_bytree": 0.8
+    }
+}

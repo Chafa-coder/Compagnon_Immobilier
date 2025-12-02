@@ -1,0 +1,4 @@
+Colonne créée,Description / Utilité
+type_local_simplifie,"Regroupement simplifié des types de biens pour faciliter les analyses : Maison, Appartement, Dépendance, etc."
+surface_carrez_totale,Somme des surfaces Carrez (lots 1-5) - meilleure estimation de la surface réelle en copropriété.
+surface_utilisee,"Pour les maisons, utiliser surface_reelle_bati, pour les appartements, surface_carrez_totale sit renseignée, surface_reelle_bati sinon "
