@@ -191,6 +191,6 @@ else:
 
     st.plotly_chart(fig, use_container_width=True)
 
-st.info("Affichage intégré : National + départements.")
+# st.info("Affichage intégré : National + départements.")
 
 

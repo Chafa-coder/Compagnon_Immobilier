@@ -71,11 +71,11 @@ ax.plot([min_mae, max_mae], [min_mae, max_mae], "--", color="gray")
 # Annotation du meilleur modèle
 bm = df.loc[best_idx]
 ax.annotate(
-    f"⭐ Meilleur modèle\n({best_model})",
+    f"Meilleur compromis puissance-généralisation)",
     xy=(bm["MAE_train"], bm["MAE_test"]),
     xytext=(bm["MAE_train"] * 1.12, bm["MAE_test"] * 0.9),
     arrowprops=dict(arrowstyle='->', lw=2),
-    fontsize=13,
+    fontsize=10,
     bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3)
 )
 
@@ -92,7 +92,8 @@ st.title("🏘️ Meilleur modèle appliqué sur type de bien")
 # ----------------------------
 #            DATA
 # ----------------------------
-csv_path = r"C:\Users\cbent\Projets\data\outputs_modelisation\comparaison_modeles.csv"
+# csv_path = r"C:\Users\cbent\Projets\data\outputs_modelisation\comparaison_modeles.csv"
+csv_path = Path("data") / "outputs_modelisation" / "comparaison_modeles.csv"
 
 try:
     df_ma = pd.read_csv(csv_path)
@@ -108,7 +109,8 @@ st.dataframe(df_ma, use_container_width=True)
 
 # ---- CONFIG ----
 st.set_page_config(page_title="Modélisation Prix Immo", layout="wide")
-output_dir = r"C:\Users\cbent\Projets\data\outputs_modelisation"
+# output_dir = r"C:\Users\cbent\Projets\data\outputs_modelisation"
+output_dir = Path("data") / "outputs_modelisation"
 
 
 # ---- SECTION 4 : FICHIERS SHAP ----

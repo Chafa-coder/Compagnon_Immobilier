@@ -33,36 +33,51 @@ except Exception as e:
     st.error(f"Erreur lors du chargement du fichier temporel : {e}")
     st.stop()
 
-col1, col2 = st.columns([2, 1])
+# col1, col2 = st.columns([2, 1])
 
-with col1:
-    fig_time = px.line(
-        df_time,
-        x="trimestre",
-        y="prix_m2",
-        title="📊 Prix médian au m² dans le temps",
-        markers=True
+# with col1:
+#     fig_time = px.line(
+#         df_time,
+#         x="trimestre",
+#         y="prix_m2",
+#         title="📊 Prix médian au m² dans le temps",
+#         markers=True
+#     )
+#     fig_time.update_layout(
+#         xaxis_title="Trimestre",
+#         yaxis_title="Prix médian (€/m²)",
+#         hovermode="x unified"
+#     )
+#     st.plotly_chart(fig_time, use_container_width=True)
+
+# with col2:
+#     st.write("### 📌 Statistiques")
+#     st.metric("Prix médian dernier trimestre", f"{df_time['prix_m2'].iloc[-1]:,.0f} €")
+#     st.metric("Variation sur 1 an",
+#               f"{df_time['prix_m2'].iloc[-4] if len(df_time)>4 else 'N/A':,.0f} € → {df_time['prix_m2'].iloc[-1]:,.0f} €")
+
+
+fig_time = px.line(
+    df_time,
+    x="trimestre",
+    y="prix_m2",
+    title="📊 Prix médian au m² dans le temps",
+    markers=True
     )
-    fig_time.update_layout(
-        xaxis_title="Trimestre",
-        yaxis_title="Prix médian (€/m²)",
-        hovermode="x unified"
+fig_time.update_layout(
+    xaxis_title="Trimestre",
+    yaxis_title="Prix médian (€/m²)",
+    hovermode="x unified"
     )
-    st.plotly_chart(fig_time, use_container_width=True)
-
-with col2:
-    st.write("### 📌 Statistiques")
-    st.metric("Prix médian dernier trimestre", f"{df_time['prix_m2'].iloc[-1]:,.0f} €")
-    st.metric("Variation sur 1 an",
-              f"{df_time['prix_m2'].iloc[-4] if len(df_time)>4 else 'N/A':,.0f} € → {df_time['prix_m2'].iloc[-1]:,.0f} €")
-
+st.plotly_chart(fig_time, use_container_width=True)
 
 # ------------------------------------------------------
 # 2. PRIX PAR DÉPARTEMENT
 # ------------------------------------------------------
 st.header("2️⃣ Prix médian par département")
 
-file_geo = r"C:\Users\cbent\Projets\data\outputs_modélisation_temps\prix_m2_median_dept.csv"
+# file_geo = r"C:\Users\cbent\Projets\data\outputs_modélisation_temps\prix_m2_median_dept.csv"
+file_geo = Path("data") / "outputs_modélisation_temps" / "prix_m2_median_dept.csv"
 
 try:
     df_geo = pd.read_csv(file_geo)
