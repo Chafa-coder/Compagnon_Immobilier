@@ -14,12 +14,12 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("📈 Évolution temporelle & géographique des prix")
+st.title("Évolution temporelle & géographique des prix")
 
 # ------------------------------------------------------
 # 1. PRIX DANS LE TEMPS
 # ------------------------------------------------------
-st.header("1️⃣ Évolution du prix médian dans le temps")
+st.header("Évolution du prix médian dans le temps")
 
 # file_time = r"C:\Users\cbent\Projets\data\outputs_modélisation_temps\Agg_trim_median.csv"
 
@@ -40,7 +40,7 @@ except Exception as e:
 #         df_time,
 #         x="trimestre",
 #         y="prix_m2",
-#         title="📊 Prix médian au m² dans le temps",
+#         title="Prix médian au m² dans le temps",
 #         markers=True
 #     )
 #     fig_time.update_layout(
@@ -51,7 +51,7 @@ except Exception as e:
 #     st.plotly_chart(fig_time, use_container_width=True)
 
 # with col2:
-#     st.write("### 📌 Statistiques")
+#     st.write("### Statistiques")
 #     st.metric("Prix médian dernier trimestre", f"{df_time['prix_m2'].iloc[-1]:,.0f} €")
 #     st.metric("Variation sur 1 an",
 #               f"{df_time['prix_m2'].iloc[-4] if len(df_time)>4 else 'N/A':,.0f} € → {df_time['prix_m2'].iloc[-1]:,.0f} €")
@@ -61,7 +61,7 @@ fig_time = px.line(
     df_time,
     x="trimestre",
     y="prix_m2",
-    title="📊 Prix médian au m² dans le temps",
+    title="Prix médian au m² dans le temps",
     markers=True
     )
 fig_time.update_layout(
@@ -74,7 +74,7 @@ st.plotly_chart(fig_time, use_container_width=True)
 # ------------------------------------------------------
 # 2. PRIX PAR DÉPARTEMENT
 # ------------------------------------------------------
-st.header("2️⃣ Prix médian par département")
+st.header("Prix médian par département")
 
 # file_geo = r"C:\Users\cbent\Projets\data\outputs_modélisation_temps\prix_m2_median_dept.csv"
 file_geo = Path("data") / "outputs_modélisation_temps" / "prix_m2_median_dept.csv"
@@ -88,7 +88,7 @@ except Exception as e:
 # Télécharger GEOJSON officiel des départements
 geojson_dept = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson"
 
-st.write("🔎 Carte interactive des prix médians (€/m²) par département")
+st.write("Carte interactive des prix médians (€/m²) par département")
 
 # Carte Folium centrée sur la France
 m = folium.Map(location=[46.6, 2.4], zoom_start=6, tiles="cartodbpositron")
@@ -117,6 +117,6 @@ for _, row in df_geo.iterrows():
 # Affichage Streamlit
 st_folium(m, width=1200, height=650)
 
-# Tableau brut optionnel
-with st.expander("📁 Voir les données brutes par département"):
-    st.dataframe(df_geo, use_container_width=True)
+# # Tableau brut optionnel
+# with st.expander("📁 Voir les données brutes par département"):
+#     st.dataframe(df_geo, use_container_width=True)

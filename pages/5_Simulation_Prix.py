@@ -10,7 +10,7 @@ from geopy.geocoders import Nominatim
 # import os
 
 st.set_page_config(page_title="5_Simulation_Prix — Estimation Immobilière", layout="wide")
-st.title("🏡 Estimation immobilière")
+st.title("Estimation immobilière")
 
 # -----------------------
 # Paths modèles
@@ -43,9 +43,9 @@ def load_models():
 models, model_errors = load_models()
 
 if any(models.values()):
-    st.success("✅ Modèles chargés (au moins un).")
+    st.success("Modèle chargé.")
 else:
-    st.error("❌ Aucun modèle chargé. Vérifiez les fichiers dans outputs_modelisation.")
+    st.error("Aucun modèle chargé. Vérifiez les fichiers dans outputs_modelisation.")
     for k, e in model_errors.items():
         st.write(f"{k}: {e}")
     st.stop()
@@ -91,29 +91,20 @@ with col_addr2:
     code_postal = st.text_input("Code postal", value="")
     commune_manual = st.text_input("Commune (optionnel)", value="")
 
-st.markdown("---")
+        
 col_left, col_right = st.columns([2,1])
 
 with col_left:
-    st.subheader("Caractéristiques du bien")
-    surface_habitable = st.number_input("Surface habitable (m²)", min_value=1.0, value=50.0, step=1.0)
+    # st.subheader("Caractéristiques du bien")
     type_bien = st.selectbox("Type de bien", ["Maison", "Appartement"])
+    surface_habitable = st.number_input("Surface habitable (m²)", min_value=1.0, value=50.0, step=1.0)
+    
+with col_right:
     nombre_pieces = st.number_input("Nombre de pièces", min_value=1, value=3, step=1)
     surface_terrain = 0.0
     if type_bien == "Maison":
         surface_terrain = st.number_input("Surface terrain (m²)", min_value=0.0, value=0.0, step=1.0)
-with col_right:
-    st.subheader("Options")
-    st.write("Les coordonnées (lat/lon) sont calculées automatiquement à partir de l'adresse.")
-    st.write("Si la commune n'est pas trouvée automatiquement, renseignez-la manuellement.")
-    if st.button("Forcer la détection de la commune depuis le code postal"):
-        if code_postal and len(code_postal) == 5:
-            c, cc, cd = get_commune_from_cp(code_postal)
-            if c:
-                commune_manual = c
-                st.success(f"Commune détectée : {c}")
-            else:
-                st.warning("Aucune commune trouvée pour ce code postal.")
+
 
 # -----------------------
 # Pré-remplir commune via API si absent
@@ -135,7 +126,7 @@ else:
 # -----------------------
 # Bouton prédiction
 # -----------------------
-if st.button("💰 Estimer le prix"):
+if st.button("Estimer le prix"):
 
     # validations explicites
     errors = []
@@ -197,7 +188,7 @@ if st.button("💰 Estimer le prix"):
     try:
         pred_log = model.predict(X_input)
         prix = float(np.expm1(pred_log[0]))  # reconvertir log1p -> euros
-        st.success(f"🏷️ Prix estimé : {prix:,.0f} €")
+        st.success(f"Prix estimé : {prix:,.0f} €")
         st.info(f"Fourchette indicative: {prix*0.9:,.0f} € — {prix*1.1:,.0f} €")
     except Exception as e:
         st.error(f"Erreur lors de la prédiction : {e}")

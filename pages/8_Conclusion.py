@@ -7,7 +7,7 @@ Created on Mon Nov 10 07:06:58 2025
 
 import streamlit as st
 
-st.title("🧭 6. Conclusion & perspectives")
+st.title("Conclusion & perspectives")
 
 st.markdown("""
 ### Synthèse
@@ -34,4 +34,3 @@ st.markdown("""
 - Mise à jour **automatique** des données DVF futures
 """)
 
-st.balloons()

@@ -18,3 +18,4 @@ python-dateutil==2.9.0.post0
 pytz==2025.2
 tzdata==2025.2
 openpyxl==3.1.2
+geopy>=2.4.0

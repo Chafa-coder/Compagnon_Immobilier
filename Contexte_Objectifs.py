@@ -17,8 +17,8 @@ import streamlit as st
 
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
-    page_title="🏠 Overview du projet",
-    page_icon="🏠",
+    page_title="Overview du projet",
+    # page_icon="🏠",
     layout="wide"
 )
 
@@ -64,7 +64,7 @@ st.markdown("""
 
 <div class="header-box">
     <div class="header-text">
-        <div class="main-title">🏠 Compagnon Immobilier</div>
+        <div class="main-title">Compagnon Immobilier</div>
         <div class="subtitle">Estimation & prévision du marché immobilier français</div>
         <p>
         Utilisation des données ouvertes 
@@ -72,25 +72,27 @@ st.markdown("""
         Découvrez comment la donnée permet d’évaluer les biens et d’anticiper les tendances du marché.
         </p>
     </div>
-    <img class="header-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Real_estate_icon.svg/512px-Real_estate_icon.svg.png" />
 </div>
 """, unsafe_allow_html=True)
+#      <img class="header-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Real_estate_icon.svg/512px-Real_estate_icon.svg.png" />
+# </div>
+# """, unsafe_allow_html=True)
 
 # --- CONTENU INTRODUCTIF ---
 st.markdown("""
-### 🎯 Objectifs
+### Objectifs
 **1. Évaluer le prix d’un bien immobilier**.  
 **2.	Prédire l’évolution du prix au m2 dans le temps** selon les territoires.
 
-### ⚙️ Pipeline analytique
+### Pipeline analytique
 1. Exploration & traitements de 1er niveau du fichier DVF  
 2. Préparation avancée & Feature Engineering  
 3. Modélisation du prix d’un bien  
 4. Prévision temporelle des prix  
 5. Synthèse & perspectives
 
-### 📁 Navigation
+### Navigation
 ➡️ Utilisez le **menu latéral** pour explorer les différentes étapes du projet.
 """)
 
-st.info("💡 Tout calcul lourd (nettoyage, entraînement de modèles, projections) est réalisé en amont. L’application se concentre sur l’exploration, la visualisation et l’interprétation.")
+# st.info("💡 Tout calcul lourd (nettoyage, entraînement de modèles, projections) est réalisé en amont. L’application se concentre sur l’exploration, la visualisation et l’interprétation.")

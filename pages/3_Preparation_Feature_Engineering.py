@@ -12,7 +12,7 @@ from pathlib import Path
 # ======================================
 st.set_page_config(page_title="Préparation & Feature Engineering", layout="wide")
 
-st.title("🧩 Préparation & Feature Engineering")
+st.title("Préparation & Feature Engineering")
 st.markdown("""
 Cette page présente la **volumétrie** du dataset DVF, la **réduction progressive** au fil des filtres, 
 et l'analyse des **outliers sur la valeur foncière et les surfaces**.
@@ -30,7 +30,7 @@ required_files = ["stats_volumes.csv", "boxplot_valeur_fonciere_avant.png"]
 missing_files = [f for f in required_files if not os.path.exists(os.path.join(output_dir, f))]
 
 if missing_files:
-    st.error(f"❌ Fichiers manquants : {', '.join(missing_files)}\n\nExécute le notebook de préparation avant de continuer.")
+    st.error(f"Fichiers manquants : {', '.join(missing_files)}\n\nExécute le notebook de préparation avant de continuer.")
     st.stop()
 
 # --- Chargement des stats volumétrie ---
@@ -40,7 +40,7 @@ stats_volumes = pd.read_csv(os.path.join(output_dir, "stats_volumes.csv")).iloc[
 # ============================
 # 🔹 Tabs : Valeur foncière / Surface utilisée
 # ============================
-tab1, tab2 = st.tabs(["💶 Valeur foncière", "🏠 Surface utilisée"])
+tab1, tab2 = st.tabs(["Valeur foncière", "Surface utilisée"])
 
 # --------------------------------------------------------------------
 # 1️⃣ Valeur foncière
@@ -85,14 +85,14 @@ with tab2:
 # ============================
 # 🔹 Tabs : Valeur foncière / Surface utilisée
 # ============================
-tab1, tab2 = st.tabs(["💶 Réduction volumétrie", "🏠 Réduction colonnes"])
+tab1, tab2 = st.tabs(["Réduction volumétrie", "Réduction colonnes"])
 
 # --------------------------------------------------------------------
 # 1️⃣ Antonoire lignes
 # --------------------------------------------------------------------
 with tab1:
 
-    st.subheader("🧮 Réduction progressive du dataset DVF")
+    st.subheader("Réduction progressive du dataset DVF")
     funnel_html_path = os.path.join(output_dir, "fig.html")
 
     if os.path.exists(funnel_html_path):

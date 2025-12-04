@@ -10,7 +10,7 @@ from pathlib import Path
 # data_dir = "data"
 data_dir = Path("data") / "Exploration"
 
-st.title("🧹 Exploration et nettoyage du dataset DVF")
+st.title("Exploration et nettoyage du dataset DVF")
 
 # -----------------------------
 # 1️⃣ Illustration de la structure DVF brute et agrégée
@@ -71,9 +71,9 @@ else:
 # -----------------------------
 # 4️⃣ Remarques / synthèse
 # -----------------------------
-st.markdown("""
-### 🧭 Interprétation :
-- L’agrégation permet de regrouper les biens liés à une même mutation (ex : maison + dépendance).
-- Le nombre total de lignes diminue, mais la cohérence par mutation augmente.
-- Les types locaux sont simplifiés pour les analyses (Maison / Appartement / Dépendance / Mixte).
-""")
+# st.markdown("""
+# ### 🧭 Interprétation :
+# - L’agrégation permet de regrouper les biens liés à une même mutation (ex : maison + dépendance).
+# - Le nombre total de lignes diminue, mais la cohérence par mutation augmente.
+# - Les types locaux sont simplifiés pour les analyses (Maison / Appartement / Dépendance / Mixte).
+# """)

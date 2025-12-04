@@ -17,7 +17,7 @@ from pathlib import Path
 OUTPUT_DIR = Path("data") / "outputs_modélisation_temps"
 
 st.set_page_config(page_title="Prévision interactive prix/m²", layout="wide")
-st.title("📈 Prévision interactive des prix au m² (National + Départements)")
+st.title("Prévision interactive des prix au m² (National + Départements)")
 
 
 
@@ -85,7 +85,7 @@ def load_backtest(scope):
 # # ---------------------------------------------------------
 # # Utilisation dans la page Streamlit
 # # ---------------------------------------------------------
-# st.subheader("📦 Distribution MAE par modèle")
+# st.subheader("Distribution MAE par modèle")
 
 # # # df_backtest = load_backtest(scope)   # fourni par ta page Streamlit
 
@@ -120,12 +120,12 @@ if not scopes:
     st.warning("Aucune donnée trouvée dans OUTPUT_DIR. Exécute d'abord le pipeline.")
     st.stop()
 
-scope = st.selectbox("📌 Choisir un périmètre :", scopes)
+scope = st.selectbox("Choisir un périmètre :", scopes)
 
 # ---------------------------------------------------------------------
 # BACKTEST
 # ---------------------------------------------------------------------
-st.subheader(f"🏆 Meilleur modèle pour {scope}")
+st.subheader(f"Meilleur modèle pour {scope}")
 
 df_res = load_backtest(scope)
 
@@ -146,7 +146,7 @@ else:
 # ---------------------------------------------------------------------
 # FORECAST + HISTORIQUE
 # ---------------------------------------------------------------------
-st.subheader(f"📉 Historique et prévision XGBoost — {scope}")
+st.subheader(f"Historique et prévision XGBoost — {scope}")
 
 fc = load_forecast(scope)
 hist = load_history(scope)
