@@ -54,23 +54,24 @@ st.markdown("""
     margin-top: -0.3rem;
 }
 
-/* Image/logo du bandeau */
-.header-img {
-    width: 220px;
-    border-radius: 1rem;
-    opacity: 0.95;
-}
+# /* Image/logo du bandeau */
+# .header-img {
+#     width: 220px;
+#     border-radius: 1rem;
+#     opacity: 0.95;
+# }
 </style>
 
 <div class="header-box">
     <div class="header-text">
         <div class="main-title">Compagnon Immobilier</div>
-        <div class="subtitle">Estimation & prévision du marché immobilier français</div>
+        <div class="subtitle">
         <p>
-        Utilisation des données ouvertes 
-        <b>Demandes de Valeurs Foncières (DVF)</b>.<br>
-        Découvrez comment la donnée permet d’évaluer les biens et d’anticiper les tendances du marché.
+        Projet DataScientest : octobre - décembre 2025<br>
+        Estimation & prévision du marché immobilier français<br>
+        Utilisation des données ouvertes DVF (Demandes de Valeurs Foncières) <br>
         </p>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -81,18 +82,18 @@ st.markdown("""
 # --- CONTENU INTRODUCTIF ---
 st.markdown("""
 ### Objectifs
-**1. Évaluer le prix d’un bien immobilier**.  
-**2.	Prédire l’évolution du prix au m2 dans le temps** selon les territoires.
+##### 1. Évaluer le prix d’un bien immobilier
+##### 2. Prédire l’évolution du prix au m2 dans le temps selon les territoires.
 
 ### Pipeline analytique
-1. Exploration & traitements de 1er niveau du fichier DVF  
-2. Préparation avancée & Feature Engineering  
+1. Exploration Exploration et structuration initiale  
+2. Nettoyage, filtrage & enrichissement  
 3. Modélisation du prix d’un bien  
 4. Prévision temporelle des prix  
 5. Synthèse & perspectives
 
 ### Navigation
-➡️ Utilisez le **menu latéral** pour explorer les différentes étapes du projet.
+Utilisez le **menu latéral** pour explorer les différentes étapes du projet.
 """)
 
-# st.info("💡 Tout calcul lourd (nettoyage, entraînement de modèles, projections) est réalisé en amont. L’application se concentre sur l’exploration, la visualisation et l’interprétation.")
+

@@ -43,7 +43,7 @@ def load_models():
 models, model_errors = load_models()
 
 if any(models.values()):
-    st.success("Modèle chargé.")
+    st.success("**Saisir les informations sur le bien**")
 else:
     st.error("Aucun modèle chargé. Vérifiez les fichiers dans outputs_modelisation.")
     for k, e in model_errors.items():
@@ -87,9 +87,48 @@ col_addr1, col_addr2 = st.columns([2, 1])
 with col_addr1:
     numero = st.text_input("Numéro", value="")
     rue = st.text_input("Nom de la rue", value="")
+
 with col_addr2:
-    code_postal = st.text_input("Code postal", value="")
-    commune_manual = st.text_input("Commune (optionnel)", value="")
+    # --- Saisie CP ---
+    code_postal = st.text_input("Code postal", value="", key="code_postal")
+
+    # --- Initialisation safe des variables dans session_state ---
+    if "commune_detectee" not in st.session_state:
+        st.session_state["commune_detectee"] = ""
+    if "code_commune" not in st.session_state:
+        st.session_state["code_commune"] = ""
+    if "code_departement" not in st.session_state:
+        st.session_state["code_departement"] = ""
+
+    # --- Appel automatique API suivant code postal ---
+    if (
+        st.session_state.code_postal
+        and len(st.session_state.code_postal) == 5
+        and st.session_state.code_postal.isdigit()
+    ):
+        c, cc, cd = get_commune_from_cp(st.session_state.code_postal)
+
+        if c:  # Mise à jour de la commune détectée
+            st.session_state.commune_detectee = c
+            st.session_state.code_commune = cc
+            st.session_state.code_departement = cd
+        else:
+            st.session_state.commune_detectee = ""
+            st.session_state.code_commune = ""
+            st.session_state.code_departement = ""
+
+    # --- Affichage du champ Commune (lecture seule) ---
+    st.text_input(
+        "Commune détectée",
+        value=st.session_state.commune_detectee,
+        disabled=True
+    )
+
+# On expose commune / code_commune / code_departement comme variables locales utilisables plus loin
+commune = st.session_state.commune_detectee
+code_commune = st.session_state.code_commune
+code_departement = st.session_state.code_departement
+
 
         
 col_left, col_right = st.columns([2,1])
@@ -97,7 +136,20 @@ col_left, col_right = st.columns([2,1])
 with col_left:
     # st.subheader("Caractéristiques du bien")
     type_bien = st.selectbox("Type de bien", ["Maison", "Appartement"])
-    surface_habitable = st.number_input("Surface habitable (m²)", min_value=1.0, value=50.0, step=1.0)
+    # surface_habitable = st.number_input("Surface habitable (m²)", min_value=1.0, value=50.0, step=1.0)
+    surface_habitable_str = st.text_input("Surface habitable (m²)", value="50")
+    try:
+        surface_habitable = float(surface_habitable_str)
+    except ValueError:
+        surface_habitable = None  # Indique une saisie invalide
+    # try:
+    #     surface_habitable = float(surface_habitable_str)
+    #     if surface_habitable <= 0:
+    #         st.error("La surface habitable doit être supérieure à 0.")
+    #         st.stop()
+    # except ValueError:
+    #     st.error("Veuillez saisir un nombre valide pour la surface habitable.")
+    #     st.stop()
     
 with col_right:
     nombre_pieces = st.number_input("Nombre de pièces", min_value=1, value=3, step=1)
@@ -107,23 +159,6 @@ with col_right:
 
 
 # -----------------------
-# Pré-remplir commune via API si absent
-# -----------------------
-commune = None
-code_commune = None
-code_departement = None
-if code_postal and len(code_postal) == 5 and code_postal.isdigit():
-    c, cc, cd = get_commune_from_cp(code_postal)
-    if c:
-        commune = c
-        code_commune = cc
-        code_departement = cd
-    else:
-        commune = commune_manual if commune_manual else None
-else:
-    commune = commune_manual if commune_manual else None
-
-# -----------------------
 # Bouton prédiction
 # -----------------------
 if st.button("Estimer le prix"):
@@ -131,38 +166,38 @@ if st.button("Estimer le prix"):
     # validations explicites
     errors = []
     if surface_habitable is None or surface_habitable <= 0:
-        errors.append("Surface habitable doit être > 0.")
+        errors.append("Surface habitable doit être numérique > 0.")
     if nombre_pieces is None or nombre_pieces <= 0:
         errors.append("Nombre de pièces doit être > 0.")
     if not code_postal or len(code_postal) != 5 or not code_postal.isdigit():
         errors.append("Code postal invalide (5 chiffres).")
     if not commune:
-        errors.append("Commune introuvable — renseignez manuellement la commune.")
+        errors.append("Code postal introuvable")
+    if len(errors) > 0:
+        for e in errors:
+            st.error(e)
+        st.stop()
+    
+    errors = []
+    if not rue or len(rue.strip()) < 3:
+        errors.append("Le nom de la rue est obligatoire et doit être complet (ex: 'avenue de la République').")
+    if not numero or len(numero.strip()) < 1:
+        errors.append("Le numéro de la rue est obligatoire.")
     if len(errors) > 0:
         for e in errors:
             st.error(e)
         st.stop()
 
-    # géocodage (lat/lon)
+
+    # Géocodage strict de l’adresse
     lat, lon = geocode_address(numero or "0", rue or "", code_postal, commune)
     if lat is None or lon is None:
-        st.warning("Géocodage impossible → tentative avec le centre de la commune via API Gouv")
-        # fallback: use geo.api.gouv.fr to get centroid? we use None-check and stop if absent
-        # try to get approximate centroid by calling the geo API (not always available)
-        try:
-            url = f"https://geo.api.gouv.fr/communes?codePostal={code_postal}&fields=centre&format=json"
-            r = requests.get(url, timeout=4).json()
-            if r and "centre" in r[0]:
-                centre = r[0]["centre"]
-                lat = centre["coordinates"][1]
-                lon = centre["coordinates"][0]
-                st.info("Coordonnées approximatives (centre commune) utilisées.")
-        except Exception:
-            pass
-
-    if lat is None or lon is None:
-        st.error("Impossible d'obtenir latitude/longitude. Vérifiez adresse / commune.")
+        st.error(
+            "Géocodage impossible : vérifiez que le numéro, le nom de la rue, "
+            "le code postal et la commune sont corrects."
+            )
         st.stop()
+
 
     # construire DataFrame pour le pipeline — types stricts
     X_input = pd.DataFrame([{
@@ -188,8 +223,10 @@ if st.button("Estimer le prix"):
     try:
         pred_log = model.predict(X_input)
         prix = float(np.expm1(pred_log[0]))  # reconvertir log1p -> euros
-        st.success(f"Prix estimé : {prix:,.0f} €")
-        st.info(f"Fourchette indicative: {prix*0.9:,.0f} € — {prix*1.1:,.0f} €")
+        st.success(f"Prix estimé : {prix:,.0f} €".replace(",", " "))
+        # st.success(f"Prix estimé : {prix:,.0f} €")
+        # st.info(f"Fourchette indicative: {prix*0.9:,.0f} € — {prix*1.1:,.0f} €")
+        st.info(f"Fourchette indicative: {prix*0.9:,.0f} € — {prix*1.1:,.0f} €".replace(",", " "))
     except Exception as e:
         st.error(f"Erreur lors de la prédiction : {e}")
         st.exception(e)
