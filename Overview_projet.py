@@ -18,7 +18,6 @@ import streamlit as st
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
     page_title="Overview du projet",
-    # page_icon="🏠",
     layout="wide"
 )
 
@@ -28,7 +27,7 @@ st.markdown("""
 /* Bandeau principal */
 .header-box {
     background-color: #e2e8f0;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 1rem;
     margin-bottom: 2rem;
     display: flex;
@@ -54,12 +53,6 @@ st.markdown("""
     margin-top: -0.3rem;
 }
 
-# /* Image/logo du bandeau */
-# .header-img {
-#     width: 220px;
-#     border-radius: 1rem;
-#     opacity: 0.95;
-# }
 </style>
 
 <div class="header-box">
@@ -68,16 +61,12 @@ st.markdown("""
         <div class="subtitle">
         <p>
         Projet DataScientest : octobre - décembre 2025<br>
-        Estimation & prévision du marché immobilier français<br>
-        Utilisation des données ouvertes DVF (Demandes de Valeurs Foncières) <br>
         </p>
         </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
-#      <img class="header-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Real_estate_icon.svg/512px-Real_estate_icon.svg.png" />
-# </div>
-# """, unsafe_allow_html=True)
+
 
 # --- CONTENU INTRODUCTIF ---
 st.markdown("""
@@ -86,14 +75,18 @@ st.markdown("""
 ##### 2. Prédire l’évolution du prix au m2 dans le temps selon les territoires.
 
 ### Pipeline analytique
-1. Exploration Exploration et structuration initiale  
-2. Nettoyage, filtrage & enrichissement  
+1. Exploration et structuration  
+2. Nettoyage et feature engineering  
 3. Modélisation du prix d’un bien  
 4. Prévision temporelle des prix  
 5. Synthèse & perspectives
 
-### Navigation
-Utilisez le **menu latéral** pour explorer les différentes étapes du projet.
+### Données
+- Données DVF (Demandes de Valeurs Foncières) 2024-2025 pour l'évaluation du prix de biens (volumétrie ~5M)
+- Données DVF 2020-2025 pour l’évolution du prix au m2 dans le temps (Volumétrie ~20M )
+
+
+_=> Navigation : Utilisez le **menu latéral** pour explorer les différentes étapes du projet._
 """)
 
 

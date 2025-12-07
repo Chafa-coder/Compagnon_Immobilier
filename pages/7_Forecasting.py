@@ -1,23 +1,19 @@
 
-
-
-
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import os
-import plotly.express as px
+# import plotly.express as px
 from pathlib import Path
 
 # ---------------------------------------------------------------------
 # CONFIGURATION
 # ---------------------------------------------------------------------
-# OUTPUT_DIR = r"C:\Users\cbent\Projets\data\outputs_modélisation_temps"
 
 OUTPUT_DIR = Path("data") / "outputs_modélisation_temps"
 
 st.set_page_config(page_title="Prévision interactive prix/m²", layout="wide")
-st.title("Prévision interactive des prix au m² (National + Départements)")
+st.title("Modélisation du prix au m²")
 
 
 
@@ -40,7 +36,8 @@ def list_available_scopes():
             # - DEP_XX (exactement 2 chiffres)
             if name == "FR":
                 scopes.add(name)
-            elif name.startswith("DEP_") and len(name) == 6 and name[4:].isdigit():
+            # elif name.startswith("DEP_") and len(name) == 6 and name[4:].isdigit():
+            elif name.startswith("DEP_") and name[4:].isdigit():
                 scopes.add(name)
 
     scopes = sorted(scopes, key=lambda x: (x != "FR", x))
@@ -54,46 +51,6 @@ def load_backtest(scope):
     if os.path.exists(fname):
         return pd.read_csv(fname)
     return None
-# ----------------------
-# # ---------------------------------------------------------
-# # Boxplot interactif des scores MAE
-# # ---------------------------------------------------------
-# def plot_boxplot(df):
-#     if "model" not in df.columns or "MAE" not in df.columns:
-#         st.error("Les colonnes 'model' et 'MAE' sont requises.")
-#         return
-
-#     fig = px.box(
-#         df,
-#         x="model",
-#         y="MAE",
-#         points="all",      # montre tous les points (utile pour visualiser les splits)
-#         title="Distribution MAE par modèle (splits)",
-#         width=900,
-#         height=500
-#     )
-
-#     fig.update_layout(
-#         xaxis_title="Modèle",
-#         yaxis_title="MAE",
-#         showlegend=False
-#     )
-
-#     st.plotly_chart(fig, use_container_width=True)
-
-
-# # ---------------------------------------------------------
-# # Utilisation dans la page Streamlit
-# # ---------------------------------------------------------
-# st.subheader("Distribution MAE par modèle")
-
-# # # df_backtest = load_backtest(scope)   # fourni par ta page Streamlit
-
-# # if df_backtest is None:
-# #     st.warning("Aucune donnée de backtest pour ce périmètre.")
-# # else:
-# #     plot_boxplot(df_backtest)
-# # # --------------------
 
 @st.cache_data
 def load_forecast(scope):

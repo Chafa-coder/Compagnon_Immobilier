@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Évolution temporelle & géographique des prix")
+st.title("Évolution temporelle & géographique du prix par m2")
 
 # ------------------------------------------------------
 # 1. PRIX DANS LE TEMPS
@@ -33,35 +33,12 @@ except Exception as e:
     st.error(f"Erreur lors du chargement du fichier temporel : {e}")
     st.stop()
 
-# col1, col2 = st.columns([2, 1])
-
-# with col1:
-#     fig_time = px.line(
-#         df_time,
-#         x="trimestre",
-#         y="prix_m2",
-#         title="Prix médian au m² dans le temps",
-#         markers=True
-#     )
-#     fig_time.update_layout(
-#         xaxis_title="Trimestre",
-#         yaxis_title="Prix médian (€/m²)",
-#         hovermode="x unified"
-#     )
-#     st.plotly_chart(fig_time, use_container_width=True)
-
-# with col2:
-#     st.write("### Statistiques")
-#     st.metric("Prix médian dernier trimestre", f"{df_time['prix_m2'].iloc[-1]:,.0f} €")
-#     st.metric("Variation sur 1 an",
-#               f"{df_time['prix_m2'].iloc[-4] if len(df_time)>4 else 'N/A':,.0f} € → {df_time['prix_m2'].iloc[-1]:,.0f} €")
-
 
 fig_time = px.line(
     df_time,
     x="trimestre",
     y="prix_m2",
-    title="Prix médian au m² dans le temps",
+    # title="Prix médian au m² dans le temps",
     markers=True
     )
 fig_time.update_layout(
@@ -88,7 +65,7 @@ except Exception as e:
 # Télécharger GEOJSON officiel des départements
 geojson_dept = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson"
 
-st.write("Carte interactive des prix médians (€/m²) par département")
+# st.write("Carte interactive des prix médians (€/m²) par département")
 
 # Carte Folium centrée sur la France
 m = folium.Map(location=[46.6, 2.4], zoom_start=6, tiles="cartodbpositron")

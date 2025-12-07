@@ -10,15 +10,18 @@ from pathlib import Path
 # data_dir = "data"
 data_dir = Path("data") / "Exploration"
 
-st.title("Exploration et nettoyage du dataset DVF")
+st.title("Exploration et structuration")
 
 # -----------------------------
 # 1️⃣ Illustration de la structure DVF brute et agrégée
 # -----------------------------
-st.subheader("Illustration de la structure DVF brute et agrégée")
+st.subheader("Agrégation par mutation")
 
-avant_path = os.path.join(data_dir, "exemple_avant_agreg_appart.csv")
-apres_path = os.path.join(data_dir, "exemple_apres_agreg_appart.csv")
+avant_path = os.path.join(data_dir, "exemple_avant_agreg_appart_v1.csv")
+apres_path = os.path.join(data_dir, "exemple_apres_agreg_appart_v1.csv")
+
+# avant_path = os.path.join(data_dir, "exemple_avant_agreg.csv")
+# apres_path = os.path.join(data_dir, "exemple_apres_agreg.csv")
 
 if os.path.exists(avant_path) and os.path.exists(apres_path):
     df_avant = pd.read_csv(avant_path)
@@ -38,7 +41,7 @@ nan_img_path = os.path.join(data_dir, "fig_nan_top20.png")
 nan_csv_path = os.path.join(data_dir, "nan_top20.csv")
 
 if os.path.exists(nan_img_path):
-    st.image(nan_img_path, caption="Top 20 colonnes avec le plus de NaN")
+    st.image(nan_img_path)#, caption="Top 20 colonnes avec le plus de NaN")
 # if os.path.exists(nan_csv_path):
 #     df_nan = pd.read_csv(nan_csv_path)
 #     st.dataframe(df_nan)
@@ -52,7 +55,7 @@ st.subheader("Simplification de la variable type_local")
 
 type_img_path = os.path.join(data_dir, "type_local_simplification.png")
 if os.path.exists(type_img_path):
-    st.image(type_img_path, caption="Comparaison des types de biens avant/après simplification")
+    st.image(type_img_path)#, caption="Comparaison des types de biens avant/après simplification")
 else:
     st.warning("Graphique de comparaison non trouvé.")
     
@@ -63,7 +66,7 @@ st.subheader("Nouvelles colonnes créées")
 new_cols_csv = os.path.join(data_dir, "nouvelles_colonnes.csv")
 if os.path.exists(new_cols_csv):
     df_new_cols = pd.read_csv(new_cols_csv)
-    st.write("Les transformations appliquées ont introduit plusieurs variables dérivées utiles pour la suite :")
+    #st.write("Les transformations appliquées ont introduit plusieurs variables dérivées utiles pour la suite :")
     st.table(df_new_cols)
 else:
     st.warning("Fichier nouvelles_colonnes.csv non trouvé.")

@@ -12,11 +12,11 @@ from pathlib import Path
 # ======================================
 st.set_page_config(page_title="Préparation & Feature Engineering", layout="wide")
 
-st.title("Préparation & Feature Engineering")
-st.markdown("""
-Cette page présente la **volumétrie** du dataset DVF, la **réduction progressive** au fil des filtres, 
-et l'analyse des **outliers sur la valeur foncière et les surfaces**.
-""")
+st.title("Nettoyage & Feature Engineering")
+# st.markdown("""
+# Cette page présente la **volumétrie** du dataset DVF, la **réduction progressive** au fil des filtres, 
+# et l'analyse des **outliers sur la valeur foncière et les surfaces**.
+# """)
 
 # ============================
 # 🔹 Chargement des outputs
@@ -35,6 +35,89 @@ if missing_files:
 
 # --- Chargement des stats volumétrie ---
 stats_volumes = pd.read_csv(os.path.join(output_dir, "stats_volumes.csv")).iloc[0]
+
+# ============================
+# 🔹 Tabs : Valeur foncière / Surface utilisée
+# ============================
+tab1, tab2 = st.tabs(["Réduction volumétrie", "Réduction colonnes"])
+
+# --------------------------------------------------------------------
+# 1️⃣ Antonoire lignes
+# --------------------------------------------------------------------
+with tab1:
+
+    st.subheader("Réduction progressive du dataset DVF")
+    funnel_html_path = os.path.join(output_dir, "fig.html")
+
+    if os.path.exists(funnel_html_path):
+        with open(funnel_html_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        st.components.v1.html(html, height=500)
+    else:
+        st.warning("Fichier funnel HTML non trouvé.")
+
+    st.markdown("---")
+    
+    
+# --------------------------------------------------------------------
+# 2️⃣ ntonoire colonnes
+# --------------------------------------------------------------------
+
+with tab2:
+    st.subheader("Réduction progressive du nombre de colonnes")
+
+    # -------------------------
+    # Étapes de transformation du dataset
+    etapes = [
+        "Fichier brut",
+        "- colonnes vides/non exploitable",
+        "- Colonnes redondantes",
+        "Retenues pour modélisation"
+    ]
+    # Nombre de lignes après chaque étape
+    lignes = [
+        40,
+        28,
+        15,
+        10
+    ]
+    # Palette dégradée de bleus (foncé → clair)
+    colors = [
+        "#0B3D91",
+        "#1556B0",
+        "#1E6FCC",
+        "#2B84E0"
+    ]
+
+    # Création du funnel avec Plotly
+    fig = go.Figure(go.Funnel(
+        y = etapes,
+        x = lignes,
+        textinfo = "value",
+        textposition = "inside",
+        texttemplate = "%{value}",  # valeurs toujours affichées
+        opacity = 0.9,
+        marker = {
+            "color": colors,
+            "line": {"color": "white", "width": 1}
+        }
+    ))
+
+    fig.update_layout(
+        title="Réduction progressive du nombre de colonnes",
+        xaxis_title="Nombre de lignes restantes",
+        height=500,
+        width=500,  # largeur fixe
+        font=dict(size=12),
+        plot_bgcolor="white",
+    )
+
+    # Utilisation des colonnes pour contrôler la largeur
+    col1, col2 = st.columns([1, 1])  # ajuster ratio pour élargir ou réduire
+    with col1:
+        st.plotly_chart(fig)  # width défini dans layout, pas use_container_width
+
+    st.markdown("---")
 
 
 # ============================
@@ -82,86 +165,5 @@ with tab2:
         
         
         
-# ============================
-# 🔹 Tabs : Valeur foncière / Surface utilisée
-# ============================
-tab1, tab2 = st.tabs(["Réduction volumétrie", "Réduction colonnes"])
 
-# --------------------------------------------------------------------
-# 1️⃣ Antonoire lignes
-# --------------------------------------------------------------------
-with tab1:
-
-    st.subheader("Réduction progressive du dataset DVF")
-    funnel_html_path = os.path.join(output_dir, "fig.html")
-
-    if os.path.exists(funnel_html_path):
-        with open(funnel_html_path, "r", encoding="utf-8") as f:
-            html = f.read()
-        st.components.v1.html(html, height=500)
-    else:
-        st.warning("Fichier funnel HTML non trouvé.")
-
-    st.markdown("---")
-    
-    
-# --------------------------------------------------------------------
-# 2️⃣ ntonoire colonnes
-# --------------------------------------------------------------------
-
-with tab2:
-    st.subheader("Réduction progressive du nombre de colonnes")
-
-    # -------------------------
-    # Étapes de transformation du dataset
-    etapes = [
-        "Fichier brut",
-        "quasi vides et non exploitable",
-        "Redondantes ou non pertinentes pour modélisation ",
-        "Retenues pour modélisation"
-    ]
-    # Nombre de lignes après chaque étape
-    lignes = [
-        40,
-        28,
-        15,
-        10
-    ]
-    # Palette dégradée de bleus (foncé → clair)
-    colors = [
-        "#0B3D91",
-        "#1556B0",
-        "#1E6FCC",
-        "#2B84E0"
-    ]
-
-    # Création du funnel avec Plotly
-    fig = go.Figure(go.Funnel(
-        y = etapes,
-        x = lignes,
-        textinfo = "value",
-        textposition = "inside",
-        texttemplate = "%{value}",  # valeurs toujours affichées
-        opacity = 0.9,
-        marker = {
-            "color": colors,
-            "line": {"color": "white", "width": 1}
-        }
-    ))
-
-    fig.update_layout(
-        title="Réduction progressive du nombre de colonnes",
-        xaxis_title="Nombre de lignes restantes",
-        height=500,
-        width=500,  # largeur fixe
-        font=dict(size=12),
-        plot_bgcolor="white",
-    )
-
-    # Utilisation des colonnes pour contrôler la largeur
-    col1, col2 = st.columns([1, 1])  # ajuster ratio pour élargir ou réduire
-    with col1:
-        st.plotly_chart(fig)  # width défini dans layout, pas use_container_width
-
-    st.markdown("---")
 
