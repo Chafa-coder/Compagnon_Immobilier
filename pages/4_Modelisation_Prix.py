@@ -17,18 +17,36 @@ st.title("Modèles testés")
 # ----------------------------
 #            DATA
 # ----------------------------
-# csv_path = r"C:\Users\cbent\Projets\data\outputs_modelisation\model_comparison_stable.csv"
+# 
 csv_path = Path("data") / "outputs_modelisation" / "model_comparison_stable.csv"
+
+# try:
+#     df = pd.read_csv(csv_path)
+#     # st.success("Fichier chargé avec succès !")
+# except Exception as e:
+#     st.error(f"Erreur lors du chargement du CSV : {e}")
+#     st.stop()
+
+# # st.subheader("Données du fichier")
+# st.dataframe(df, use_container_width=True)
 
 try:
     df = pd.read_csv(csv_path)
-    # st.success("Fichier chargé avec succès !")
 except Exception as e:
     st.error(f"Erreur lors du chargement du CSV : {e}")
     st.stop()
 
-# st.subheader("Données du fichier")
-st.dataframe(df, use_container_width=True)
+# Colonnes à formater
+cols_0dec = ["MAE_train", "MAE_test", "ΔMAE", "RMSE_train", "RMSE_test"]
+col_2dec = "ΔMAE(%)"
+
+# Construire le dictionnaire de format
+format_dict = {col: "{:.0f}" for col in cols_0dec if col in df.columns}
+if col_2dec in df.columns:
+    format_dict[col_2dec] = "{:.2f}"
+
+# Affichage Streamlit, valeurs toujours numériques
+st.dataframe(df.style.format(format_dict), use_container_width=True)
 
 
 # ----------------------------
@@ -96,15 +114,29 @@ st.title("Optimisation XGBoost et modélisation par type de bien")
 # csv_path = r"C:\Users\cbent\Projets\data\outputs_modelisation\comparaison_modeles.csv"
 csv_path = Path("data") / "outputs_modelisation" / "comparaison_modeles.csv"
 
+# try:
+#     df_ma = pd.read_csv(csv_path)
+#     # st.success("Fichier chargé avec succès !")
+# except Exception as e:
+#     st.error(f"Erreur lors du chargement du CSV : {e}")
+#     st.stop()
+
+# # st.subheader("Données du fichier")
+# st.dataframe(df_ma, use_container_width=True)
 try:
     df_ma = pd.read_csv(csv_path)
-    # st.success("Fichier chargé avec succès !")
 except Exception as e:
     st.error(f"Erreur lors du chargement du CSV : {e}")
     st.stop()
 
-# st.subheader("Données du fichier")
-st.dataframe(df_ma, use_container_width=True)
+# Colonnes à arrondir à 0 décimale
+cols_0dec = ["MAE", "RMSE"]  # adapte les noms exacts des colonnes
+
+# Construire le dictionnaire de format
+format_dict = {col: "{:.0f}" for col in cols_0dec if col in df_ma.columns}
+
+# Affichage avec arrondi à 0 décimale, valeurs toujours numériques
+st.dataframe(df_ma.style.format(format_dict), use_container_width=True)
 
 
 

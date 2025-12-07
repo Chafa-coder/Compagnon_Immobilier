@@ -6,8 +6,7 @@ from pathlib import Path
 # -----------------------------
 # Répertoire des fichiers générés
 # -----------------------------
-# data_dir = r"C:\Users\cbent\Projets\data"
-# data_dir = "data"
+
 data_dir = Path("data") / "Exploration"
 
 st.title("Exploration et structuration")
@@ -37,7 +36,7 @@ else:
 # 2️⃣ Top 20 colonnes avec le plus de NaN
 # -----------------------------
 st.subheader("Top 20 colonnes avec le plus de valeurs manquantes")
-nan_img_path = os.path.join(data_dir, "fig_nan_top20.png")
+nan_img_path = os.path.join(data_dir, "top20_missing_values_agg.png")
 nan_csv_path = os.path.join(data_dir, "nan_top20.csv")
 
 if os.path.exists(nan_img_path):
