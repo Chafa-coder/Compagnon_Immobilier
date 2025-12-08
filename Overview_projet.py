@@ -71,8 +71,8 @@ st.markdown("""
 # --- CONTENU INTRODUCTIF ---
 st.markdown("""
 ### Objectifs
-##### 1. Évaluer le prix d’un bien immobilier
-##### 2. Prédire l’évolution du prix au m2 dans le temps selon les territoires.
+##### 1. Évaluer le prix d’un bien immobilier en utilisant les données DVF (2024-2025, volumétrie ~5M)
+##### 2. Prédire l’évolution du prix au m2 dans le temps en utilisant les données DVF (2020-2025, volumétrie ~20M)
 
 ### Pipeline analytique
 1. Exploration et structuration  
@@ -80,10 +80,6 @@ st.markdown("""
 3. Modélisation du prix d’un bien  
 4. Prévision temporelle des prix  
 5. Synthèse & perspectives
-
-### Données
-- Données DVF (Demandes de Valeurs Foncières) 2024-2025 pour l'évaluation du prix de biens (volumétrie ~5M)
-- Données DVF 2020-2025 pour l’évolution du prix au m2 dans le temps (Volumétrie ~20M )
 
 
 _=> Navigation : Utilisez le **menu latéral** pour explorer les différentes étapes du projet._
