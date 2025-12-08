@@ -70,7 +70,8 @@ def get_commune_from_cp(code_postal: str):
 
 def geocode_address(numero, rue, code_postal, commune):
     try:
-        geolocator = Nominatim(user_agent="estimation_app")
+        # geolocator = Nominatim(user_agent="estimation_app")
+        geolocator = Nominatim(user_agent="estimation_immo_app_contact@votreadresse.com")
         address = f"{numero} {rue}, {code_postal} {commune}, France"
         location = geolocator.geocode(address, timeout=10)
         if location:
@@ -142,14 +143,6 @@ with col_left:
         surface_habitable = float(surface_habitable_str)
     except ValueError:
         surface_habitable = None  # Indique une saisie invalide
-    # try:
-    #     surface_habitable = float(surface_habitable_str)
-    #     if surface_habitable <= 0:
-    #         st.error("La surface habitable doit être supérieure à 0.")
-    #         st.stop()
-    # except ValueError:
-    #     st.error("Veuillez saisir un nombre valide pour la surface habitable.")
-    #     st.stop()
     
 with col_right:
     nombre_pieces = st.number_input("Nombre de pièces", min_value=1, value=3, step=1)
